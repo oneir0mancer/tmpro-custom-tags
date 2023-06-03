@@ -1,4 +1,7 @@
 # Custom tags and text animation for TMP
+
+![Example](https://drive.google.com/uc?id=1HEhZUus5WSkSyWsOthn82qQsIBYOOfQU)
+
 This package aims to implement a more clean and robust way to extend TMP with custom tags. 
 
 Instead of using [`<link>`](https://docs.unity3d.com/Packages/com.unity.textmeshpro@4.0/manual/RichTextLink.html) tags (which is really clunky), the idea is to use a [`ITextPreprocessor`](https://docs.unity3d.com/Packages/com.unity.textmeshpro@1.5/api/TMPro.ITextPreprocessor.html) to parse tags, and then update text mesh using that information.
