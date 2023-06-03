@@ -66,7 +66,7 @@ namespace Oneiromancer.TMP.Tags
                 {
                     if (!tagInfo.IsTagEqualAndOpen(tag)) continue;
                     
-                    tagInfo.Close(builderIdx);    //Close first valid tag
+                    tagInfo.Close(builderIdx - 1);    //Close first valid tag
                     hit = true;
                     break;
                 }
