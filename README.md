@@ -9,7 +9,7 @@ Instead of using [`<link>`](https://docs.unity3d.com/Packages/com.unity.textmesh
 This repository is a proof-of-concept, so don't expect it to be stable.
 
 ## Install
-I recommend to fork or clone this repository, for when something would inevitably need to be fixed.
+I recommend to fork or clone this repository, for when something inevitably needs to be fixed.
 
 But if you want to install it as package:
 1. Select in UPM "Add package from git URL..."
