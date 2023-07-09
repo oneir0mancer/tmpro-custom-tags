@@ -52,7 +52,7 @@ namespace Oneiromancer.TMP.Tags
 
 #if UNITY_EDITOR
         [ContextMenu("Start Preview")]
-        private void Preview()
+        public void Preview()
         {
             if (Application.isPlaying) return;
             SetParser();
@@ -60,7 +60,7 @@ namespace Oneiromancer.TMP.Tags
         }
 
         [ContextMenu("Stop Preview")]
-        private void ResetParser()
+        public void ResetParser()
         {
             if (Application.isPlaying) return;
             _currentPreprocessor = null;

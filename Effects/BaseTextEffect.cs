@@ -2,6 +2,7 @@
 
 namespace Oneiromancer.TMP.Effects
 {
+    /// Base class for text effects that processes it character by character
     [System.Serializable]
     public abstract class BaseTextEffect : ITextEffect
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Oneiromancer.TMP.Effects
 {
-    /// Use this SO class to reference text effects in inspector
+    /// Abstract class that is used to reference text effects in inspector as ScriptableObjects
     public abstract class BaseTextEffectSo: ScriptableObject, ITextEffect
     {
         public abstract string Tag { get; }
