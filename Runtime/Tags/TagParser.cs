@@ -5,13 +5,15 @@ using UnityEngine;
 
 namespace Oneiromancer.TMP.Tags
 {
+    /// <summary>
     /// Component that can process custom tags in TMP_Text, given SO settings for each tag
+    /// </summary>
     [ExecuteAlways]
     public class TagParser : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
         [SerializeField] private BaseTextEffectSo[] _tagEffects;
-        
+
         private CustomTagPreprocessor _currentPreprocessor;
         private bool _inPreviewMode;
 
@@ -19,7 +21,7 @@ namespace Oneiromancer.TMP.Tags
         {
             SetParser();
         }
-        
+
         private void Update()
         {
 #if UNITY_EDITOR
@@ -41,7 +43,7 @@ namespace Oneiromancer.TMP.Tags
             }
             _text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
         }
-        
+
         private void SetParser()
         {
             var possibleTags = _tagEffects.Select(x => x.Tag).ToList();
