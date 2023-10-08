@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Oneiromancer.TMP.Typewriter
 {
+    /// Component that will render given text character-by-character, preserving custom tag effects.
     public class TypewriterAnimation : MonoBehaviour
     {
         public event System.Action TickEvent;
@@ -26,6 +27,11 @@ namespace Oneiromancer.TMP.Typewriter
         {
             _text.maxVisibleCharacters = 0;
             if (_playOnStart) Play();
+        }
+        
+        private void OnValidate()
+        {
+            _text ??= GetComponent<TMP_Text>();
         }
 
         /// Play typewriter animation, starting with the first character
@@ -102,11 +108,6 @@ namespace Oneiromancer.TMP.Typewriter
         private void OnTMProChanged(Object obj)
         {
             if (obj == _text) RestoreCache();
-        }
-        
-        private void OnValidate()
-        {
-            _text ??= GetComponent<TMP_Text>();
         }
     }
 }

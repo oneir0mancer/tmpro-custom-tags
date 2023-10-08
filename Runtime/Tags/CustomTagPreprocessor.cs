@@ -4,24 +4,27 @@ using TMPro;
 
 namespace Oneiromancer.TMP.Tags
 {
+    /// TMP Text Preprocessor, that is used to extract tag data from string, while also removing tags themselves for rendering.
     // TMP gives us an option to preprocess text before mesh is drawn. So we use it to remove tags from text,
     // while also storing where tags start and stop. The problem is that TMP processes it's tags after this,
     // so we need to keep all the unfamiliar tags in text, but skip them for tags' starts and stops.
     [System.Serializable]
     public class CustomTagPreprocessor : ITextPreprocessor
     {
-        public List<TagInfo> TagInfos;
+        public IReadOnlyList<TagInfo> TagInfos => _tagInfos;
 
-        private List<string> _possibleTags;
+        private readonly List<TagInfo> _tagInfos = new List<TagInfo>();
+        private readonly ICollection<string> _possibleTags;
 
-        public CustomTagPreprocessor(List<string> possibleTags)
+        public CustomTagPreprocessor(ICollection<string> possibleTags)
         {
             _possibleTags = possibleTags;
         }
-        
+
+        /// Remove valid tags from a string, saving relevant tag info in process.
         public string PreprocessText(string text)
         {
-            TagInfos = new List<TagInfo>();
+            _tagInfos.Clear();
             StringBuilder builder = new StringBuilder();
             int builderIdx = 0;
             
@@ -56,7 +59,7 @@ namespace Oneiromancer.TMP.Tags
             if (tag[0] != '/')
             {
                 if (!_possibleTags.Contains(tag)) return false;
-                TagInfos.Add(new TagInfo(tag, builderIdx));
+                _tagInfos.Add(new TagInfo(tag, builderIdx));
             }
             else
             {

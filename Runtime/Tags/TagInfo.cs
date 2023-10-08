@@ -2,6 +2,7 @@
 
 namespace Oneiromancer.TMP.Tags
 {
+    /// Custom tag info: it's name, first and last affected text index.
     [System.Serializable]
     public class TagInfo
     {

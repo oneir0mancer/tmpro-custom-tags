@@ -57,8 +57,8 @@ Just note that while in editor mode Unity doesn't redraw scene or game view ever
 
 ## Typewriter Animation
 This component will animate text appearing character by character. Since every step will regenerate text mesh, interfering with effects, we cache vertex data right before the step, and restore it after mesh was regenerated.
-  
+
 ## Limitations
-* Tag preprocessor is very bare-bones, so any unknown tag will intarfere with where other tags start and end.
+* Tag preprocessor is very bare-bones, so any unknown tag will interfere with where other tags start and end.
 * You need to create a ScriptableObject wrapper for every tag to use them in Inspector. 
-  I'm working on a component that would eliminate that by using `[SerializedReference]`.
+  ~~I'm working on a component that would eliminate that by using `[SerializedReference]`.~~
