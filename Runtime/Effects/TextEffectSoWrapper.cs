@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Oneiromancer.TMP.Effects
 {
     /// Use this to create SO wrappers around effects, implemented as classes
-    public abstract class TextEffectSoWrapper<T> : BaseTextEffectSo where T : BaseTextEffect
+    public abstract class TextEffectSoWrapper<T> : BaseTextEffectSo where T : ITextEffect
     {
         [Tooltip("Override tag from original class")]
         [SerializeField] private string _tag;
