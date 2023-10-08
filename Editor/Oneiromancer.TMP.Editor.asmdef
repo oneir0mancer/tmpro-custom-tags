@@ -1,0 +1,18 @@
+{
+    "name": "Oneiromancer.TMP.Editor",
+    "rootNamespace": "Oneiromancer.TMP.Editor",
+    "references": [
+        "GUID:55b64c66da68c5c4883214d3d478609f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
