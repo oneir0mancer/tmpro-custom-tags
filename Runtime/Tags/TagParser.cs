@@ -5,11 +5,8 @@ using UnityEngine;
 
 namespace Oneiromancer.TMP.Tags
 {
-    /// <summary>
     /// Component that can process custom tags in TMP_Text, given SO settings for each tag
-    /// </summary>
     [ExecuteAlways]
-    [RequireComponent(typeof(TMP_Text))]
     public class TagParser : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
@@ -17,8 +14,6 @@ namespace Oneiromancer.TMP.Tags
 
         private CustomTagPreprocessor _currentPreprocessor;
         private bool _inPreviewMode;
-
-        private void Reset() => _text = GetComponent<TMP_Text>();
 
         private void Awake()
         {
@@ -31,6 +26,17 @@ namespace Oneiromancer.TMP.Tags
             if (!Application.isPlaying && !_inPreviewMode) return;
 #endif
             UpdateTextMesh();
+        }
+
+        private void OnValidate()
+        {
+            _text ??= GetComponent<TMP_Text>();
+        }
+
+        public void SetTargetText(TMP_Text text)
+        {
+            if (text == null) throw new System.ArgumentNullException(nameof(text), "Text shouldn't be null");
+            _text = text;
         }
 
         private void UpdateTextMesh()
