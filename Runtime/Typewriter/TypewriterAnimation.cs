@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Oneiromancer.TMP.Typewriter
 {
@@ -15,6 +16,9 @@ namespace Oneiromancer.TMP.Typewriter
         [Tooltip("Override time delay for a set of specific characters")]
         [SerializeField] private CharacterDelayOverride[] _delayOverrides;
         [SerializeField] private bool _playOnStart;
+
+        [Space(20)]
+        [SerializeField] public UnityEvent onAnimationEnded;
 
         private Coroutine _coroutine;
         private TMP_MeshInfo[] _cache;
@@ -98,6 +102,8 @@ namespace Oneiromancer.TMP.Typewriter
                 
                 yield return new WaitForSeconds(time);
             }
+
+            onAnimationEnded?.Invoke();
         }
 
         private void Tick(int index)
