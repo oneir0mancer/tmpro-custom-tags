@@ -42,13 +42,17 @@ namespace Oneiromancer.TMP.Tags
         private void UpdateTextMesh()
         {
             _text.ForceMeshUpdate();
-            foreach (var tagInfo in _currentPreprocessor.TagInfos)
+            if (_currentPreprocessor.TagInfos != null)
             {
-                foreach (var processor in _tagEffects)
+                foreach (var tagInfo in _currentPreprocessor.TagInfos)
                 {
-                    if (!tagInfo.IsTagEqual(processor.Tag)) continue;
-                    processor.ProcessEffect(_text, tagInfo.StartIndex, tagInfo.LastIndex);
+                    foreach (var processor in _tagEffects)
+                    {
+                        if (!tagInfo.IsTagEqual(processor.Tag)) continue;
+                        processor.ProcessEffect(_text, tagInfo.StartIndex, tagInfo.LastIndex);
+                    }
                 }
+                _text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
             }
             _text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
         }
