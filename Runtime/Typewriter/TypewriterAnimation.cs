@@ -60,6 +60,21 @@ namespace Oneiromancer.TMP.Typewriter
             _coroutine ??= StartCoroutine(TypewriterCoroutine(_text.maxVisibleCharacters));
         }
 
+        // Pause animation, skip animaiton cursor to the end and resume animation
+        public void SkipAnimation()
+        {
+            Pause();
+            _text.maxVisibleCharacters = _text.text.Length;
+            Resume();
+        }
+
+        // Restarts animation from begining
+        public void RestartAnimation()
+        {
+            Stop();
+            Play();
+        }
+
         private IEnumerator TypewriterCoroutine(int startIdx = 0)
         {
             _text.ForceMeshUpdate();
