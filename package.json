@@ -1,12 +1,18 @@
 {
   "name": "com.oneir0mancer.tmpro-custom-tags",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "TMPro Custom Tags",
   "description": "Extend TextMeshPro with custom tags and text animations",
   "unity": "2021.3",
   "author": {
-    "name": "oneir0mancer",
-    "email": "oneir0mancer.games@gmail.com"
+    {
+      "name": "oneir0mancer",
+      "email": "oneir0mancer.games@gmail.com"
+    },
+    {
+      "name": "craftersmine",
+      "email": "me@craftersmine.ru"
+    }
   },
   "dependencies": {
     "com.unity.textmeshpro": "1.0.0"
