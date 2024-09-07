@@ -1,4 +1,5 @@
 using System.Collections;
+using Oneiromancer.TMP.Tags;
 using TMPro;
 using UnityEngine;
 
@@ -9,19 +10,31 @@ namespace Oneiromancer.TMP.Typewriter
     {
         public event System.Action TickEvent;
         public event System.Action<char> CharacterRenderedEvent;
+        public event System.Action AnimationStartedEvent;
+        public event System.Action AnimationEndedEvent;
         
         [SerializeField] private TMP_Text _text;
         [SerializeField, Min(0)] private float _delayBetweenCharacters = 0.1f;
         [Tooltip("Override time delay for a set of specific characters")]
         [SerializeField] private CharacterDelayOverride[] _delayOverrides;
+        [Tooltip("Marks that animated text uses custom tags")]
+        [SerializeField] private bool _isUsedByTagParser;
         [SerializeField] private bool _playOnStart;
 
         private Coroutine _coroutine;
         private TMP_MeshInfo[] _cache;
 
         // Subscribe to TMP event of redrawing mesh
-        private void OnEnable() => TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTMProChanged);
-        private void OnDisable() => TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(OnTMProChanged);
+        private void OnEnable()
+        {
+            //TODO: for some reason subscribing without TagParser eats last symbol
+            if (_isUsedByTagParser) TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTMProChanged);
+        }
+
+        private void OnDisable()
+        {
+            if (_isUsedByTagParser) TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(OnTMProChanged);
+        }
 
         private void Start()
         {
@@ -31,39 +44,54 @@ namespace Oneiromancer.TMP.Typewriter
         
         private void OnValidate()
         {
+            if (!_isUsedByTagParser) _isUsedByTagParser = TryGetComponent(out TagParser _);
             _text ??= GetComponent<TMP_Text>();
         }
 
         /// Play typewriter animation, starting with the first character
+        [ContextMenu("Play")]
         public void Play()
         {
             _coroutine ??= StartCoroutine(TypewriterCoroutine());
         }
 
         /// Pause typewriter animation
+        [ContextMenu("Pause")]
         public void Pause()
         {
             if (_coroutine != null) StopCoroutine(_coroutine);
             _coroutine = null;
         }
-        
+
+        /// Resume typewriter animation from the last rendered character
+        [ContextMenu("Resume")]
+        public void Resume()
+        {
+            _coroutine ??= StartCoroutine(TypewriterCoroutine(_text.maxVisibleCharacters));
+        }
+
         /// Stop and reset typewriter animation
-        public void Stop()
+        [ContextMenu("Reset")]
+        public void StopAndReset()
         {
             Pause();
             _text.maxVisibleCharacters = 0;
         }
-        
-        /// Resume typewriter animation from the last rendered character
-        public void Resume()
+
+        /// Stop typewriter animation and reveal all the text
+        [ContextMenu("Skip")]
+        public void SkipAnimation()
         {
-            _coroutine ??= StartCoroutine(TypewriterCoroutine(_text.maxVisibleCharacters));
+            Pause();
+            _text.maxVisibleCharacters = int.MaxValue;
         }
 
         private IEnumerator TypewriterCoroutine(int startIdx = 0)
         {
             _text.ForceMeshUpdate();
             var count = _text.textInfo.characterCount;
+            
+            AnimationStartedEvent?.Invoke();
 
             yield return new WaitForSeconds(_delayBetweenCharacters);
             
@@ -83,6 +111,9 @@ namespace Oneiromancer.TMP.Typewriter
                 
                 yield return new WaitForSeconds(time);
             }
+            
+            _text.maxVisibleCharacters = int.MaxValue;
+            AnimationEndedEvent?.Invoke();
         }
 
         private void Tick(int index)

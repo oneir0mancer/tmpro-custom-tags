@@ -41,6 +41,7 @@ namespace Oneiromancer.TMP.Tags
 
         private void UpdateTextMesh()
         {
+            if (_currentPreprocessor.TagInfos == null) return;
             _text.ForceMeshUpdate();
             foreach (var tagInfo in _currentPreprocessor.TagInfos)
             {
@@ -55,6 +56,7 @@ namespace Oneiromancer.TMP.Tags
 
         private void SetParser()
         {
+            if (_tagEffects == null) return;
             var possibleTags = _tagEffects.Select(x => x.Tag).ToList();
             _currentPreprocessor = new CustomTagPreprocessor(possibleTags);
             _text.textPreprocessor = _currentPreprocessor;
